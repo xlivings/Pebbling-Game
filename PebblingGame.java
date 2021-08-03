@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 
 public class PebblingGame {
     public int[][] G_adj; //adjacency matrix of the graph
@@ -29,5 +30,32 @@ public class PebblingGame {
             profit[i] = Double.parseDouble(readLine[i]);
         }
         bfr.close();
+    }
+    
+    public static void main(String[] args) throws IOException {
+        // Check your implementation here
+        // you d not need to implement this
+        System.out.println("Main function: ");
+        Graph g = new Graph("inputfile.txt");
+        g.rootTree(0);
+    }
+    
+    private void rootTree(int V) {
+        for (int i = 0; i < G_adj.length; i++) {
+            if (G_adj[V][i] == 1) {
+                G_adj[i][V] = 0;
+                rootTree(i);
+            }
+        }
+    }
+
+    private ArrayList<Integer> findChildren(int V) {
+        ArrayList<Integer> children = new ArrayList<>();
+        for (int i = 0; i < G_adj.length; i++) {
+            if (G_adj[V][i] == 1) {
+                children.add(i);
+            }
+        }
+        return children;
     }
 }
