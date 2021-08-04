@@ -33,11 +33,33 @@ public class PebblingGame {
     }
     
     public static void main(String[] args) throws IOException {
-        // Check your implementation here
-        // you d not need to implement this
         System.out.println("Main function: ");
         Graph g = new Graph("inputfile.txt");
         g.rootTree(0);
+    }
+    
+    public ArrayList<Integer> pebbling(int V){
+        ArrayList<Integer> pebbled = new ArrayList<Integer>();
+        rootTree(V);
+        double[] isPebbled = new double[n];
+        double[] notPebbled = new double[n];
+        for (int i = 0; i < isPebbled.length; i++) {
+            isPebbled[i] = profit[i];
+        }
+        return pebbled;
+    }
+    
+    private void recursePebble(int V, double[] pebbled, double[] notPebbled) {
+        ArrayList<Integer> children = findChildren(V);
+        if (children.size() == 0) {
+            notPebbled[V] = 0;
+        } else {
+            for (int i = 0; i < children.size(); i++) {
+                recursePebble(children.get(i), pebbled, notPebbled);
+                pebbled[V] += notPebbled[children.get(i)];
+                notPebbled[V] += Double.max(pebbled[children.get(i)], notPebbled[children.get(i)]);
+            }
+        }
     }
     
     private void rootTree(int V) {
