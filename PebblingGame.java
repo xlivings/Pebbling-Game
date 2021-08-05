@@ -38,6 +38,10 @@ public class PebblingGame {
         g.rootTree(0);
     }
     
+    /**
+     * Overall function that initializes values and roots the tree at the passed in vertex
+     * @param V vertex
+     */
     public ArrayList<Integer> pebbling(int V){
         ArrayList<Integer> pebbled = new ArrayList<Integer>();
         rootTree(V);
@@ -51,6 +55,14 @@ public class PebblingGame {
         return pebbled;
     }
     
+    /**
+     * Creates the list of pebbled nodes that will have the maximum profit value.
+     * @param V vertex
+     * @param list list of pebbled nodes
+     * @param pebbled Values of nodes when pebbled
+     * @param notPebbled Values of nodes when not pebbled
+     * @param parentPebbled boolean value that tracks if the parent is pebbled
+     */
     private void addPebble(int V, ArrayList<Integer> list, double[] pebbled, double[] notPebbled, boolean parentPebbled) {
         ArrayList<Integer> children = findChildren(V);
         if (children.size() == 0 && !parentPebbled) {
@@ -71,6 +83,14 @@ public class PebblingGame {
         }
     }
     
+    /**
+     * This function will set all the initial values of the nodes for the pebbled
+     * and not pebbled arrays. Leaf nodes will have a value of 0 and non leaf nodes will have
+     * a value according to its profit value that was read in from the file.
+     * @param V vertex
+     * @param pebbled values of the nodes when pebbled
+     * @param notPebbled values of the nodes when not pebbled
+     */
     private void recursePebble(int V, double[] pebbled, double[] notPebbled) {
         ArrayList<Integer> children = findChildren(V);
         if (children.size() == 0) {
@@ -84,6 +104,10 @@ public class PebblingGame {
         }
     }
     
+    /**
+     * Roots the tree at any given vertex
+     * @param V vertex
+     */
     private void rootTree(int V) {
         for (int i = 0; i < G_adj.length; i++) {
             if (G_adj[V][i] == 1) {
@@ -92,7 +116,11 @@ public class PebblingGame {
             }
         }
     }
-
+    
+    /**
+     * Finds the nodes connected to any given vertex
+     * @param V vertex
+     */
     private ArrayList<Integer> findChildren(int V) {
         ArrayList<Integer> children = new ArrayList<>();
         for (int i = 0; i < G_adj.length; i++) {
