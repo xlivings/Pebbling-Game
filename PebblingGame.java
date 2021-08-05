@@ -46,7 +46,29 @@ public class PebblingGame {
         for (int i = 0; i < isPebbled.length; i++) {
             isPebbled[i] = profit[i];
         }
+        recursePebble(V, isPebbled, notPebbled);
+        addPebble(V, pebbled, isPebbled, notPebbled, false);
         return pebbled;
+    }
+    
+    private void addPebble(int V, ArrayList<Integer> list, double[] pebbled, double[] notPebbled, boolean parentPebbled) {
+        ArrayList<Integer> children = findChildren(V);
+        if (children.size() == 0 && !parentPebbled) {
+            list.add(V);
+            return;
+        } else if (children.size() == 0) {
+            return;
+        }
+        if (!parentPebbled && pebbled[V] > notPebbled[V]) {
+            list.add(V);
+            for (int i = 0; i < children.size(); i++) {
+                addPebble(children.get(i), list, pebbled, notPebbled, true);
+            }
+        } else {
+            for (int i = 0; i < children.size(); i++) {
+                addPebble(children.get(i), list, pebbled, notPebbled, false);
+            }
+        }
     }
     
     private void recursePebble(int V, double[] pebbled, double[] notPebbled) {
